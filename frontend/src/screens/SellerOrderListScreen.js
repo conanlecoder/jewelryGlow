@@ -57,7 +57,7 @@ const SellerOrderListScreen = ({ history }) => {
                             <td>{order._id}</td>
                             <td>{order.user && order.user.name}</td>
                             <td>{order.createdAt.substring(0, 10)}</td>
-                            <td>R{order.totalPrice}</td>
+                            <td>€{order.totalPrice}</td>
                             <td>
                                 {order.isValidated ? (
                                     <i className="fas fa-check" style={{ color: 'green' }}></i>
