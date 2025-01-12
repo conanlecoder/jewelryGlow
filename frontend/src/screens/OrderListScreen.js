@@ -1,39 +1,34 @@
-import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import { listOrders, deliverOrder, validateOrder } from '../actions/orderActions'
+import React, { useEffect } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { listOrders, validateOrder } from '../actions/orderActions';
+import { ORDER_DELIVER_RESET } from '../constants/orderConstants';
 
 const OrderListScreen = ({ history }) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
-	const orderList = useSelector((state) => state.orderList)
-	const { loading, error, orders } = orderList
+	const orderList = useSelector((state) => state.orderList);
+	const { loading, error, orders } = orderList;
 
-	const userLogin = useSelector((state) => state.userLogin)
-	const { userInfo } = userLogin
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	useEffect(() => {
 		if (userInfo && (userInfo.isAdmin || userInfo.isSeller)) {
-			dispatch(listOrders()) // Fetch all orders
+			dispatch(listOrders());
 		} else {
-			history.push('/login') // Redirect to login if not authorized
+			history.push('/login');
 		}
-	}, [dispatch, userInfo, history])
-
-	const deliverHandler = (orderId) => {
-		if (window.confirm('Are you sure you want to mark this order as delivered?')) {
-			dispatch(deliverOrder(orderId))
-		}
-	}
+	}, [dispatch, userInfo, history]);
 
 	const validateHandler = (orderId) => {
 		if (window.confirm('Are you sure you want to validate this order?')) {
-			dispatch(validateOrder(orderId))
+			dispatch(validateOrder(orderId));
 		}
-	}
+	};
 
 	return (
 		<>
@@ -50,7 +45,6 @@ const OrderListScreen = ({ history }) => {
 						<th>User</th>
 						<th>Date</th>
 						<th>Total</th>
-						<th>Paid</th>
 						<th>Delivered</th>
 						<th>Validated</th>
 						<th>Actions</th>
@@ -63,13 +57,7 @@ const OrderListScreen = ({ history }) => {
 							<td>{order.user && order.user.name}</td>
 							<td>{order.createdAt.substring(0, 10)}</td>
 							<td>R{order.totalPrice}</td>
-							<td>
-								{order.isPaid ? (
-									order.paidAt.substring(0, 10)
-								) : (
-									<i className='fas fa-times' style={{ color: 'red' }}></i>
-								)}
-							</td>
+							
 							<td>
 								{order.isDelivered ? (
 									order.deliveredAt.substring(0, 10)
@@ -85,19 +73,15 @@ const OrderListScreen = ({ history }) => {
 								)}
 							</td>
 							<td>
-								{userInfo.isAdmin && !order.isDelivered && (
-									<Button
-										variant='success'
-										className='btn-sm'
-										onClick={() => deliverHandler(order._id)}
-									>
-										Mark Delivered
+								<LinkContainer to={`/order/${order._id}`}>
+									<Button variant='primary' className='btn-sm'>
+										Edit
 									</Button>
-								)}
+								</LinkContainer>
 								{userInfo.isSeller && !order.isValidated && (
 									<Button
-										variant='primary'
-										className='btn-sm'
+										variant='success'
+										className='btn-sm ml-2'
 										onClick={() => validateHandler(order._id)}
 									>
 										Validate
@@ -110,7 +94,7 @@ const OrderListScreen = ({ history }) => {
 				</Table>
 			)}
 		</>
-	)
-}
+	);
+};
 
-export default OrderListScreen
+export default OrderListScreen;
