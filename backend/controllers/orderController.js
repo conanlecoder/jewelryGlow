@@ -130,6 +130,23 @@ const cancelOrder = asyncHandler(async (req, res) => {
 		throw new Error('Order not found');
 	}
 });
+// @desc    Validate order by seller
+// @route   PUT /api/orders/:id/validate
+// @access  Private/Seller
+const validateOrder = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+
+	if (order) {
+		order.isValidated = true;
+		order.validatedAt = Date.now();
+
+		const updatedOrder = await order.save();
+		res.json(updatedOrder);
+	} else {
+		res.status(404);
+		throw new Error('Order not found');
+	}
+});
 
 export {
 	addOrderItems,
@@ -139,4 +156,5 @@ export {
 	getOrders,
 	updateOrderToDelivered,
 	cancelOrder,
+	validateOrder
 };

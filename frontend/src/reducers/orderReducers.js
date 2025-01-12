@@ -21,8 +21,26 @@ import {
 	ORDER_DELIVER_SUCCESS,
 	ORDER_DELIVER_FAIL,
 	ORDER_DELIVER_RESET,
+	ORDER_VALIDATE_REQUEST,
+	ORDER_VALIDATE_SUCCESS,
+	ORDER_VALIDATE_FAIL,
+	ORDER_VALIDATE_RESET,
 } from '../constants/orderConstants'
 
+export const orderValidateReducer = (state = {}, action) => {
+	switch (action.type) {
+		case ORDER_VALIDATE_REQUEST:
+			return { loading: true };
+		case ORDER_VALIDATE_SUCCESS:
+			return { loading: false, success: true };
+		case ORDER_VALIDATE_FAIL:
+			return { loading: false, error: action.payload };
+		case ORDER_VALIDATE_RESET:
+			return {};
+		default:
+			return state;
+	}
+};
 export const orderCreateReducer = (state = {}, action) => {
 	switch (action.type) {
 		case ORDER_CREATE_REQUEST:
