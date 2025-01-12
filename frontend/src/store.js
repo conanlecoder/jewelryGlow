@@ -27,7 +27,8 @@ import {
 	orderListMyReducer,
 	orderListReducer,
 	orderDeliverReducer,
-	orderValidateReducer, // Import the new reducer
+	orderValidateReducer,
+	sellerOrderListReducer,  // Import the new reducer
 } from './reducers/orderReducers';
 
 const reducer = combineReducers({
@@ -53,6 +54,8 @@ const reducer = combineReducers({
 	orderList: orderListReducer,
 	productReviewCreate: productReviewCreateReducer,
 	productTopRated: productTopRatedReducer,
+	sellerOrderList: sellerOrderListReducer,
+
 });
 
 // Get cartItems from local storage
@@ -81,6 +84,8 @@ const initialState = {
 	},
 	userLogin: { userInfo: userInfoFromStorage },
 };
+
+
 
 // Set middleware to thunk middleware
 const middleware = [thunk];

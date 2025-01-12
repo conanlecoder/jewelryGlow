@@ -1,6 +1,5 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-// Create Order Schema
 const orderSchema = mongoose.Schema(
 	{
 		user: {
@@ -8,6 +7,7 @@ const orderSchema = mongoose.Schema(
 			required: true,
 			ref: 'User',
 		},
+
 		orderItems: [
 			{
 				name: { type: String, required: true },

@@ -25,6 +25,9 @@ import {
 	ORDER_VALIDATE_SUCCESS,
 	ORDER_VALIDATE_FAIL,
 	ORDER_VALIDATE_RESET,
+	SELLER_ORDER_LIST_REQUEST,
+	SELLER_ORDER_LIST_SUCCESS,
+	SELLER_ORDER_LIST_FAIL,
 } from '../constants/orderConstants'
 
 export const orderValidateReducer = (state = {}, action) => {
@@ -37,6 +40,18 @@ export const orderValidateReducer = (state = {}, action) => {
 			return { loading: false, error: action.payload };
 		case ORDER_VALIDATE_RESET:
 			return {};
+		default:
+			return state;
+	}
+};
+export const sellerOrderListReducer = (state = { orders: [] }, action) => {
+	switch (action.type) {
+		case SELLER_ORDER_LIST_REQUEST:
+			return { loading: true, orders: [] };
+		case SELLER_ORDER_LIST_SUCCESS:
+			return { loading: false, orders: action.payload };
+		case SELLER_ORDER_LIST_FAIL:
+			return { loading: false, error: action.payload };
 		default:
 			return state;
 	}

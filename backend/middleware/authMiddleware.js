@@ -36,6 +36,15 @@ const admin = (req, res, next) => {
 		throw new Error('Not authorized as an admin')
 	}
 }
+const adminOrSeller = (req, res, next) => {
+	if (req.user && (req.user.isAdmin || req.user.isSeller)) {
+		next();
+	} else {
+		res.status(403); // Forbidden
+		throw new Error('Not authorized as admin or seller');
+	}
+};
+
 // Middleware to check if the user is a seller
 const seller = (req, res, next) => {
 	if (req.user && req.user.isSeller) {
@@ -46,5 +55,5 @@ const seller = (req, res, next) => {
 	}
 };
 
-export { protect, admin, seller };
+export { protect, admin, seller, adminOrSeller };
 

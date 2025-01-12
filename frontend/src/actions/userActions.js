@@ -30,39 +30,34 @@ import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 // Actions to login
 export const login = (email, password) => async (dispatch) => {
 	try {
-		dispatch({ type: USER_LOGIN_REQUEST })
+		dispatch({ type: USER_LOGIN_REQUEST });
 
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		}
+		};
 
 		// Make post request to login
-		const { data } = await axios.post(
-			'/api/users/login',
-			{ email, password },
-			config
-		)
+		const { data } = await axios.post('/api/users/login', { email, password }, config);
 
 		dispatch({
 			type: USER_LOGIN_SUCCESS,
 			payload: data,
-		})
+		});
+
 		// Set user to local storage
-		localStorage.setItem('userInfo', JSON.stringify(data))
+		localStorage.setItem('userInfo', JSON.stringify(data));
 	} catch (error) {
 		dispatch({
 			type: USER_LOGIN_FAIL,
 			payload:
-				// Send a custom error message
-				// Else send a generic error message
 				error.response && error.response.data.message
 					? error.response.data.message
 					: error.message,
-		})
+		});
 	}
-}
+};
 // Actions to logout
 export const logout = () => (dispatch) => {
 	localStorage.removeItem('userInfo')

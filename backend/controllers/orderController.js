@@ -19,9 +19,18 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		res.status(400);
 		throw new Error('No order items');
 	} else {
+		// Fetch the seller from the first product in the order
+		const product = await Product.findById(orderItems[0].product);
+
+		if (!product) {
+			res.status(404);
+			throw new Error('Product not found');
+		}
+
 		const order = new Order({
 			orderItems,
 			user: req.user._id,
+			seller: product.seller, // Assign the seller from the product
 			shippingAddress,
 			paymentMethod,
 			itemsPrice,
@@ -34,6 +43,20 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		res.status(201).json(createdOrder);
 	}
 });
+
+// @desc    Get all orders for sellers
+// @route   GET /api/orders/seller-orders
+// @access  Private/Seller
+const getSellerOrders = asyncHandler(async (req, res) => {
+	if (!req.user || !req.user.isSeller) {
+		res.status(403);
+		throw new Error('Not authorized as a seller');
+	}
+
+	const orders = await Order.find({}).populate('user', 'name email');
+	res.json(orders);
+});
+
 
 // @desc    Get order by ID
 // @route   GET /api/orders/:id
@@ -81,13 +104,14 @@ const getMyOrders = asyncHandler(async (req, res) => {
 	res.json(orders);
 });
 
-// @desc    Get all orders (Admin)
+// @desc    Get all orders (Admin/Seller)
 // @route   GET /api/orders
-// @access  Private/Admin
+// @access  Private/Admin or Seller
 const getOrders = asyncHandler(async (req, res) => {
 	const orders = await Order.find({}).populate('user', 'id name');
 	res.json(orders);
 });
+
 
 // @desc    Update order to delivered
 // @route   PUT /api/orders/:id/deliver
@@ -156,5 +180,6 @@ export {
 	getOrders,
 	updateOrderToDelivered,
 	cancelOrder,
-	validateOrder
+	validateOrder,
+	getSellerOrders
 };
