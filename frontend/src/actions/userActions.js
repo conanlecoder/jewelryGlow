@@ -152,49 +152,51 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 		})
 	}
 }
-// Actions to get user details
+// Actions to update user profile
 export const updateUserProfile = (user) => async (dispatch, getState) => {
 	try {
-		dispatch({ type: USER_UPDATE_PROFILE_REQUEST })
+		dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
 
 		// Get userInfo from userLogin by destructuring
 		const {
 			userLogin: { userInfo },
-		} = getState()
+		} = getState();
 
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${userInfo.token}`,
 			},
-		}
+		};
 
 		// Make put request to update user profile
-		const { data } = await axios.put('/api/users/profile', user, config)
-		// Dispatch update profile
+		const { data } = await axios.put('/api/users/profile', user, config);
+
+		// Dispatch update profile success
 		dispatch({
 			type: USER_UPDATE_PROFILE_SUCCESS,
 			payload: data,
-		})
-		// Dispatch user login success
+		});
+
+		// Dispatch user login success (to update local storage)
 		dispatch({
 			type: USER_LOGIN_SUCCESS,
 			payload: data,
-		})
-		// Set user to local storage
-		localStorage.setItem('userInfo', JSON.stringify(data))
+		});
+
+		// Set updated user info to local storage
+		localStorage.setItem('userInfo', JSON.stringify(data));
 	} catch (error) {
 		dispatch({
 			type: USER_UPDATE_PROFILE_FAIL,
 			payload:
-				// Send a custom error message
-				// Else send a generic error message
 				error.response && error.response.data.message
 					? error.response.data.message
 					: error.message,
-		})
+		});
 	}
-}
+};
+
 // Actions to get user details
 export const listUsers = () => async (dispatch, getState) => {
 	try {
