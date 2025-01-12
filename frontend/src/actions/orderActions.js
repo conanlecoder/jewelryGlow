@@ -22,6 +22,9 @@ import {
 	ORDER_VALIDATE_REQUEST,
 	ORDER_VALIDATE_SUCCESS,
 	ORDER_VALIDATE_FAIL,
+	SELLER_ORDER_LIST_REQUEST,
+	SELLER_ORDER_LIST_SUCCESS,
+	SELLER_ORDER_LIST_FAIL,
 } from '../constants/orderConstants'
 
 // Actions to create a new order
@@ -89,6 +92,36 @@ export const validateOrder = (orderId) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({
 			type: ORDER_VALIDATE_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};
+export const listSellerOrders = () => async (dispatch, getState) => {
+	try {
+		dispatch({ type: SELLER_ORDER_LIST_REQUEST });
+
+		const {
+			userLogin: { userInfo },
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		};
+
+		const { data } = await axios.get('/api/orders/seller-orders', config);
+
+		dispatch({
+			type: SELLER_ORDER_LIST_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: SELLER_ORDER_LIST_FAIL,
 			payload:
 				error.response && error.response.data.message
 					? error.response.data.message
