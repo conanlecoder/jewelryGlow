@@ -1,4 +1,4 @@
-add import mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
 // Create Review Schema
 const reviewSchema = mongoose.Schema(
