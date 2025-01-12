@@ -1,6 +1,6 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {
 	productListReducer,
 	productDetailsReducer,
@@ -9,8 +9,8 @@ import {
 	productUpdateReducer,
 	productReviewCreateReducer,
 	productTopRatedReducer,
-} from './reducers/productReducers'
-import { cartReducer } from './reducers/cartReducers'
+} from './reducers/productReducers';
+import { cartReducer } from './reducers/cartReducers';
 import {
 	userLoginReducer,
 	userRegisterReducer,
@@ -19,7 +19,7 @@ import {
 	userListReducer,
 	userDeleteReducer,
 	userUpdateReducer,
-} from './reducers/userReducers'
+} from './reducers/userReducers';
 import {
 	orderCreateReducer,
 	orderDetailsReducer,
@@ -27,7 +27,8 @@ import {
 	orderListMyReducer,
 	orderListReducer,
 	orderDeliverReducer,
-} from './reducers/orderReducers'
+	orderValidateReducer, // Import the new reducer
+} from './reducers/orderReducers';
 
 const reducer = combineReducers({
 	productList: productListReducer,
@@ -45,51 +46,50 @@ const reducer = combineReducers({
 	orderPay: orderPayReducer,
 	orderListMy: orderListMyReducer,
 	orderDeliver: orderDeliverReducer,
+	orderValidate: orderValidateReducer, // Add the reducer here
 	productDelete: productDeleteReducer,
 	productCreate: productCreateReducer,
 	productUpdate: productUpdateReducer,
 	orderList: orderListReducer,
 	productReviewCreate: productReviewCreateReducer,
 	productTopRated: productTopRatedReducer,
-})
+});
 
 // Get cartItems from local storage
 const cartItemsFromStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
-	: []
+	: [];
 // Get userInfo from local storage
 const userInfoFromStorage = localStorage.getItem('userInfo')
 	? JSON.parse(localStorage.getItem('userInfo'))
-	: null
+	: null;
 // Get shippingAddress from local storage
-const shipppingAddressFromStorage = localStorage.getItem('shippingAddress')
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 	? JSON.parse(localStorage.getItem('shippingAddress'))
-	: {}
+	: {};
 // Get paymentMethod from local storage
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
 	? JSON.parse(localStorage.getItem('paymentMethod'))
-	: {}
+	: {};
 
 // Create initial state
 const initialState = {
 	cart: {
 		cartItems: cartItemsFromStorage,
-		shippingAddress: shipppingAddressFromStorage,
+		shippingAddress: shippingAddressFromStorage,
 		paymentMethod: paymentMethodFromStorage,
 	},
 	userLogin: { userInfo: userInfoFromStorage },
-}
+};
 
 // Set middleware to thunk middleware
-const middleware = [thunk]
+const middleware = [thunk];
 
 // Create store
-// Pass initial state to load things at that point
-// Setup redux-devtools-extension
 const store = createStore(
 	reducer,
 	initialState,
 	composeWithDevTools(applyMiddleware(...middleware))
-)
+);
 
-export default store
+export default store;

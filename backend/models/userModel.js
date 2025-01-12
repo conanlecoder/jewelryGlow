@@ -22,6 +22,11 @@ const userSchema = mongoose.Schema(
 			required: true,
 			default: false,
 		},
+		isSeller: {
+			type: Boolean,
+			required: true,
+			default: false, // Default to false for non-sellers
+		},
 		address: {
 			street: { type: String, default: '' },
 			city: { type: String, default: '' },

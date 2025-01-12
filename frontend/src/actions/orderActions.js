@@ -19,6 +19,9 @@ import {
 	ORDER_DELIVER_REQUEST,
 	ORDER_DELIVER_SUCCESS,
 	ORDER_DELIVER_FAIL,
+	ORDER_VALIDATE_REQUEST,
+	ORDER_VALIDATE_SUCCESS,
+	ORDER_VALIDATE_FAIL,
 } from '../constants/orderConstants'
 
 // Actions to create a new order
@@ -62,6 +65,37 @@ export const createOrder = (order) => async (dispatch, getState) => {
 		})
 	}
 }
+
+// Action to validate an order by a seller
+export const validateOrder = (orderId) => async (dispatch, getState) => {
+	try {
+		dispatch({ type: ORDER_VALIDATE_REQUEST });
+
+		// Get userInfo from userLogin by destructuring
+		const {
+			userLogin: { userInfo },
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		};
+
+		// Make put request to validate the order
+		await axios.put(`/api/orders/${orderId}/validate`, {}, config);
+
+		dispatch({ type: ORDER_VALIDATE_SUCCESS });
+	} catch (error) {
+		dispatch({
+			type: ORDER_VALIDATE_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};
 // Actions to create a new order
 export const getOrderDetails = (id) => async (dispatch, getState) => {
 	try {
