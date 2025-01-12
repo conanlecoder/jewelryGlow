@@ -1,5 +1,5 @@
 import path from 'path'
-import express, { json } from 'express'
+import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
@@ -19,7 +19,6 @@ connectDB()
 const app = express()
 
 // Run morgan ONLY if in development mode
-// morgan logs all activities
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'))
 }
@@ -30,10 +29,6 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
-
-app.get('/api/config/paypal', (req, res) =>
-	res.send(process.env.PAYPAL_CLIENT_ID)
-)
 
 // Make uploads folder static
 const __dirname = path.resolve()
@@ -46,7 +41,6 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
 	)
 } else {
-	// test get route
 	app.get('/', (req, res) => {
 		res.send('API is running...')
 	})
