@@ -1,42 +1,53 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
-import Message from '../components/Message'
-import { addToCart, removeFromCart } from '../actions/cartActions'
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap';
+import Message from '../components/Message';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 
 const CartScreen = ({ match, location, history }) => {
 	// Get product id
-	const productId = match.params.id
+	const productId = match.params.id;
 
 	// Get the quantity ?qty=x
-	const qty = location.search ? Number(location.search.split('=')[1]) : 1
+	const qty = location.search ? Number(location.search.split('=')[1]) : 1;
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	// useSelector is to grab what we want from the state
-	const cart = useSelector((state) => state.cart)
-	const { cartItems } = cart
+	const cart = useSelector((state) => state.cart);
+	const { cartItems } = cart;
 
 	// Add two decimals to price if needed
 	const addDecimals = (num) => {
-		return (Math.round(num * 100) / 100).toFixed(2)
-	}
+		return (Math.round(num * 100) / 100).toFixed(2);
+	};
 
 	// make request here upon component load
 	useEffect(() => {
 		// Fire off action to add item and quantity to cart
 		if (productId) {
-			dispatch(addToCart(productId, qty))
+			dispatch(addToCart(productId, qty));
 		}
-	}, [dispatch, productId, qty]) // Dependencies, on change they fire off useEffect
+	}, [dispatch, productId, qty]); // Dependencies, on change they fire off useEffect
 
 	const removeFromCartHandler = (id) => {
-		dispatch(removeFromCart(id))
-	}
+		dispatch(removeFromCart(id));
+	};
+
 	const checkoutHandler = () => {
-		history.push('/login?redirect=shipping')
-	}
+		history.push('/login?redirect=shipping');
+	};
+
+	// Handle quantity change with stock validation
+	const handleQtyChange = (item, newQty) => {
+		if (newQty > item.countInStock) {
+			alert(`Only ${item.countInStock} items are available in stock.`);
+			return;
+		}
+		dispatch(addToCart(item.product, newQty));
+	};
+
 	return (
 		<Row>
 			<Col md={8}>
@@ -63,11 +74,7 @@ const CartScreen = ({ match, location, history }) => {
 										<Form.Control
 											as='select'
 											value={item.qty}
-											onChange={(e) =>
-												dispatch(
-													addToCart(item.product, Number(e.target.value))
-												)
-											}
+											onChange={(e) => handleQtyChange(item, Number(e.target.value))}
 										>
 											{/* Getting countInStock keys */}
 											{[...Array(item.countInStock).keys()].map((x) => (
@@ -97,17 +104,14 @@ const CartScreen = ({ match, location, history }) => {
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
 							<h2>
-								Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-								items
+								Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items
 							</h2>
 							<span className='push-to-right'>
-								R
+                R
 								{addDecimals(
-									cartItems
-										.reduce((acc, item) => acc + item.qty * item.price, 0)
-										.toFixed(2)
+									cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)
 								)}
-							</span>
+              </span>
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<Button
@@ -123,7 +127,7 @@ const CartScreen = ({ match, location, history }) => {
 				</Card>
 			</Col>
 		</Row>
-	)
-}
+	);
+};
 
-export default CartScreen
+export default CartScreen;
