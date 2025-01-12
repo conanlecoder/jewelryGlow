@@ -7,9 +7,12 @@ import {
 	getMyOrders,
 	getOrders,
 	updateOrderToDelivered,
+	validateOrder
 } from '../controllers/orderController.js'
-import { protect, admin } from '../middleware/authMiddleware.js'
+import { protect, admin, seller } from '../middleware/authMiddleware.js';
 
+// Route to validate order (only sellers can access)
+router.route('/:id/validate').put(protect, seller, validateOrder);
 router.route('/').post(protect, addOrderItems).get(protect, admin, getOrders)
 router.route('/myorders').get(protect, getMyOrders)
 router.route('/:id').get(protect, getOrderById)

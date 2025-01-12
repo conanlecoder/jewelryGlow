@@ -4,9 +4,9 @@ import mongoose from 'mongoose'
 const orderSchema = mongoose.Schema(
 	{
 		user: {
-			type: mongoose.Schema.Types.ObjectId, // Gets id of User
+			type: mongoose.Schema.Types.ObjectId,
 			required: true,
-			ref: 'User', // Adds relationship between Order and User
+			ref: 'User',
 		},
 		orderItems: [
 			{
@@ -15,9 +15,9 @@ const orderSchema = mongoose.Schema(
 				image: { type: String, required: true },
 				price: { type: String, required: true },
 				product: {
-					type: mongoose.Schema.Types.ObjectId, // Gets id of Product
+					type: mongoose.Schema.Types.ObjectId,
 					required: true,
-					ref: 'Product', // Adds relationship between Order and Product },
+					ref: 'Product',
 				},
 			},
 		],
@@ -68,11 +68,20 @@ const orderSchema = mongoose.Schema(
 		deliveredAt: {
 			type: Date,
 		},
+		isValidated: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
+		validatedAt: {
+			type: Date,
+		},
 	},
 	{
 		timestamps: true,
 	}
-)
+);
+
 
 const Order = mongoose.model('Order', orderSchema)
 
