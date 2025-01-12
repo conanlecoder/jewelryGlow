@@ -20,5 +20,7 @@ router.route('/:id').get(protect, getOrderById);
 router.route('/:id/pay').put(protect, updateOrderToPaid);
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered);
 router.route('/:id/validate').put(protect, seller, validateOrder);
+// Route for creating a new order (accessible to authenticated users)
+router.route('/').post(protect, addOrderItems);
 
 export default router;

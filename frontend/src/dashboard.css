@@ -1,0 +1,55 @@
+/* General body style */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    padding: 20px;
+}
+
+/* Summary cards */
+.card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card .card-text {
+    font-size: 1.5rem;
+}
+
+/* Recent orders table */
+.table-sm {
+    font-size: 0.9rem;
+}
+
+.table thead th {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
+.table tbody td {
+    text-align: center;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button styles */
+.btn-block {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+}

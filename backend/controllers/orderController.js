@@ -19,18 +19,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		res.status(400);
 		throw new Error('No order items');
 	} else {
-		// Fetch the seller from the first product in the order
-		const product = await Product.findById(orderItems[0].product);
-
-		if (!product) {
-			res.status(404);
-			throw new Error('Product not found');
-		}
-
 		const order = new Order({
 			orderItems,
 			user: req.user._id,
-			seller: product.seller, // Assign the seller from the product
 			shippingAddress,
 			paymentMethod,
 			itemsPrice,

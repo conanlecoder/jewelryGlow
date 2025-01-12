@@ -81,6 +81,13 @@ const Header = () => {
 									</LinkContainer>
 								</NavDropdown>
 							)}
+							{userInfo && (userInfo.isAdmin || userInfo.isSeller) && (
+								<NavDropdown title="Dashboard" id="dashboardmenu">
+									<LinkContainer to="/dashboard">
+										<NavDropdown.Item>Dashboard</NavDropdown.Item>
+									</LinkContainer>
+								</NavDropdown>
+							)}
 
 						</Nav>
 					</Navbar.Collapse>
