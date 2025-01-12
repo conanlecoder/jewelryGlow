@@ -14,8 +14,8 @@ const PaymentScreen = ({ history }) => {
 		history.push('/shipping')
 	}
 
-	// Default paymentMethod is PayPal but can be changed
-	const [paymentMethod, setPaymentMethod] = useState('PayPal')
+	// Default paymentMethod is 'Cash on Delivery'
+	const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery')
 
 	const dispatch = useDispatch()
 
@@ -33,25 +33,15 @@ const PaymentScreen = ({ history }) => {
 				<Form.Group>
 					<Form.Label as='legend'>Select Method</Form.Label>
 					<Col>
-						{/* Payment methods
-                    Add Form.Check with new payment method */}
 						<Form.Check
 							type='radio'
-							label='PayPal or Credit Card'
-							id='PayPal'
+							label='Cash on Delivery'
+							id='COD'
 							name='paymentMethod'
-							value='PayPal'
+							value='Cash on Delivery'
 							checked
 							onChange={(e) => setPaymentMethod(e.target.value)}
 						></Form.Check>
-						{/* <Form.Check
-							type='radio'
-							label='Stripe'
-							id='Stripe'
-							name='paymentMethod'
-							value='Stripe'
-							onChange={(e) => setPaymentMethod(e.target.value)}
-						></Form.Check> */}
 					</Col>
 				</Form.Group>
 				<Button type='submit' variant='primary'>
