@@ -14,6 +14,7 @@ const UserScreen = ({ match, history }) => {
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [isAdmin, setIsAdmin] = useState(false)
+	const [isSeller, setIsSeller] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -40,13 +41,29 @@ const UserScreen = ({ match, history }) => {
 				setName(user.name)
 				setEmail(user.email)
 				setIsAdmin(user.isAdmin)
+				setIsSeller(user.isSeller)
 			}
 		}
 	}, [successUpdate, dispatch, history, user, userId]) // Dependencies, on change they fire off useEffect)
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-		dispatch(updateUser({ _id: userId, name, email, isAdmin }))
+		dispatch(updateUser({ _id: userId, name, email, isAdmin, isSeller }))
+	}
+
+	// Ensure only one checkbox can be selected at a time
+	const handleAdminChange = (e) => {
+		setIsAdmin(e.target.checked)
+		if (e.target.checked) {
+			setIsSeller(false) // Deselect isSeller if isAdmin is selected
+		}
+	}
+
+	const handleSellerChange = (e) => {
+		setIsSeller(e.target.checked)
+		if (e.target.checked) {
+			setIsAdmin(false) // Deselect isAdmin if isSeller is selected
+		}
 	}
 
 	return (
@@ -67,7 +84,7 @@ const UserScreen = ({ match, history }) => {
 				) : (
 					<Form onSubmit={submitHandler}>
 						{/* Name */}
-						<Form.Group controlId='email'>
+						<Form.Group controlId='name'>
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type='text'
@@ -92,7 +109,16 @@ const UserScreen = ({ match, history }) => {
 								type='checkbox'
 								label='Is Admin'
 								checked={isAdmin}
-								onChange={(e) => setIsAdmin(e.target.checked)}
+								onChange={handleAdminChange}
+							></Form.Check>
+						</Form.Group>
+						{/* IsSeller */}
+						<Form.Group controlId='isseller'>
+							<Form.Check
+								type='checkbox'
+								label='Is Seller'
+								checked={isSeller}
+								onChange={handleSellerChange}
 							></Form.Check>
 						</Form.Group>
 						{/* Button */}

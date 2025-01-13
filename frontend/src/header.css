@@ -1,0 +1,15 @@
+/* Apply gold font color to nav links */
+.custom-btn-text {
+    color: #C0A16B !important; /* Gold color */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.custom-btn-text:hover {
+    color: #A47F50 !important; /* Darker gold color on hover */
+}
+
+/* Optional: Remove underline from nav links */
+.custom-btn-text.nav-link {
+    text-decoration: none;
+}
