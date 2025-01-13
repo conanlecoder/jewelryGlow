@@ -3,15 +3,15 @@ import bcrypt from 'bcryptjs'
 const users = [
 	// Admin user
 	{
-		name: 'Melvin Doe',
-		email: 'melvin@eg.com',
+		name: 'Aymane RYANY',
+		email: 'aryany@jewlry.co',
 		password: bcrypt.hashSync('12345', 10), //  10 = num rounds
 		isAdmin: true,
 	},
 	// Standard users
 	{
 		name: 'Belle Doe',
-		email: 'belle@eg.com',
+		email: 'belle@jewlry.co',
 		password: bcrypt.hashSync('12345', 10), //  10 = num rounds
 	},
 	{
@@ -21,8 +21,8 @@ const users = [
 		isSeller: true,
 	},
 	{
-		name: 'Mike Doe',
-		email: 'mike@eg.com',
+		name: 'Othmane ELYATIMI',
+		email: 'oelyatimi@jewlry.com',
 		password: bcrypt.hashSync('12345', 10), //  10 = num rounds
 	},
 ]

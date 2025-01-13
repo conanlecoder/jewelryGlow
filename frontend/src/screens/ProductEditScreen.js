@@ -56,28 +56,30 @@ const ProductScreen = ({ match, history }) => {
 	}, [successUpdate, dispatch, history, product, productId]) // Dependencies, on change they fire off useEffect)
 
 	const uploadFileHandler = async (e) => {
-		const file = e.target.files[0]
+		const file = e.target.files[0];
 
-		const formData = new FormData()
-		formData.append('image', file)
-		setUploading(true)
+		const formData = new FormData();
+		formData.append('image', file);
+		setUploading(true);
+
 		try {
 			const config = {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
-			}
+			};
 
 			// Making post request to upload the image
-			const { data } = await axios.post('/api/upload', formData, config)
+			const { data } = await axios.post('/api/upload', formData, config);
 
-			setImage(data)
-			setUploading(false)
+			setImage(data.filePath); // Set the filePath string, not the entire object
+			setUploading(false);
 		} catch (error) {
-			console.error(error)
-			setUploading(false)
+			console.error(error);
+			setUploading(false);
 		}
-	}
+	};
+
 
 	const submitHandler = (e) => {
 		e.preventDefault()

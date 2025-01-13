@@ -56,7 +56,9 @@ const OrderListScreen = ({ history }) => {
 							<td>{order._id}</td>
 							<td>{order.user && order.user.name}</td>
 							<td>{order.createdAt.substring(0, 10)}</td>
-							<td>R{order.totalPrice}</td>
+
+							<td>{order.totalPrice} €</td>
+
 							
 							<td>
 								{order.isDelivered ? (

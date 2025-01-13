@@ -1,7 +1,7 @@
 {
-  "name": "react-complete-e-commerce",
+  "name": "jewelry_glow",
   "version": "1.0.0",
-  "description": "React Complete Full Stack E-Commerce",
+  "description": "jewelry website E-Commerce project ",
   "main": "index.js",
   "type": "module",
   "scripts": {
