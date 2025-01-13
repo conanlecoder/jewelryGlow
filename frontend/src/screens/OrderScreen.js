@@ -35,7 +35,7 @@ const OrderScreen = ({ match }) => {
   const orderCancel = useSelector((state) => state.orderCancel);
   const { loading: loadingCancel, success: successCancel } = orderCancel;
 
-  if (!loading) {
+  if (!loading && order) {
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
     };
@@ -58,17 +58,18 @@ const OrderScreen = ({ match }) => {
   };
 
   const validateOrderHandler = () => {
-
     dispatch(validateOrder(orderId));
   };
-
 
   const cancelOrderHandler = () => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
       dispatch(cancelOrder(orderId));
     }
   };
-  const taxPrice = Number((0.15 * order.itemsPrice).toFixed(2));
+
+  // Safely calculate taxPrice
+  const taxPrice = order && order.itemsPrice ? Number((0.15 * order.itemsPrice).toFixed(2)) : 0;
+
   return loading ? (
       <Loader />
   ) : error ? (
@@ -104,7 +105,6 @@ const OrderScreen = ({ match }) => {
                 ) : (
                     <Message variant="danger">Not Delivered</Message>
                 )}
-
               </ListGroup.Item>
 
               <ListGroup.Item>
@@ -130,7 +130,6 @@ const OrderScreen = ({ match }) => {
                       ))}
                     </ListGroup>
                 )}
-
               </ListGroup.Item>
             </ListGroup>
           </Col>
@@ -171,7 +170,6 @@ const OrderScreen = ({ match }) => {
                 </ListGroup.Item>
 
                 {loadingDeliver && <Loader />}
-                {loadingDeliver && <Loader />}
                 {userInfo.isAdmin && !order.isDelivered && order.isValidated && !order.isCancelled && (
                     <ListGroup.Item>
                       <Button type="button" className="btn btn-block" onClick={deliverHandler}>
@@ -180,15 +178,21 @@ const OrderScreen = ({ match }) => {
                     </ListGroup.Item>
                 )}
 
-
                 {loadingValidate && <Loader />}
-                {(userInfo.isAdmin || userInfo.isSeller) &&  !order.isDelivered  && !order.isValidated && !order.isCancelled && (
-                    <ListGroup.Item>
-                      <Button type="button" className="btn btn-block" onClick={validateOrderHandler}>
-                        Validate Order
-                      </Button>
-                    </ListGroup.Item>
-                )}
+                {(userInfo.isAdmin || userInfo.isSeller) &&
+                    !order.isDelivered &&
+                    !order.isValidated &&
+                    !order.isCancelled && (
+                        <ListGroup.Item>
+                          <Button
+                              type="button"
+                              className="btn btn-block"
+                              onClick={validateOrderHandler}
+                          >
+                            Validate Order
+                          </Button>
+                        </ListGroup.Item>
+                    )}
                 {loadingCancel && <Loader />}
                 {!order.isCancelled && !order.isDelivered && (
                     <ListGroup.Item>
@@ -202,7 +206,6 @@ const OrderScreen = ({ match }) => {
                       </Button>
                     </ListGroup.Item>
                 )}
-
               </ListGroup>
             </Card>
           </Col>
