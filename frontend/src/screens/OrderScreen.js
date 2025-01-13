@@ -58,8 +58,10 @@ const OrderScreen = ({ match }) => {
   };
 
   const validateOrderHandler = () => {
+
     dispatch(validateOrder(orderId));
   };
+
 
   const cancelOrderHandler = () => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
@@ -180,7 +182,7 @@ const OrderScreen = ({ match }) => {
 
 
                 {loadingValidate && <Loader />}
-                {userInfo.isSeller && !order.isDelivered  && !order.isValidated && !order.isCancelled && (
+                {(userInfo.isAdmin || userInfo.isSeller) &&  !order.isDelivered  && !order.isValidated && !order.isCancelled && (
                     <ListGroup.Item>
                       <Button type="button" className="btn btn-block" onClick={validateOrderHandler}>
                         Validate Order

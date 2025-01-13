@@ -27,12 +27,13 @@ router.route('/:id').get(protect, getOrderById);
 // Route for updating order to paid
 router.route('/:id/pay').put(protect, updateOrderToPaid);
 // Route for validate order
-router.route('/:id/validate').put(protect, seller, validateOrder);
+router.route('/:id/validate').put(protect, adminOrSeller, validateOrder);
+
+
 // Route for updating order to delivered
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered);
 
-// Route for validating an order by a seller
-router.route('/:id/validate').put(protect, seller, validateOrder);
+
 
 // Route for cancelling an order
 router.route('/:id/cancel').put(protect, cancelOrder);
