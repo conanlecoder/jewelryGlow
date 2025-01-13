@@ -15,7 +15,7 @@ This project also implements real-time validation for orders by both sellers and
 - **Product Page**: View individual product details.
 - **Cart Page**: Add products to the cart and proceed to checkout.
 - **Place Order Page**: Review your order before placing it.
-- **Payment **: cash on delivery COD.
+- **Payment**: cash on delivery COD.
 - **My Orders Page**: Users can view their order history.
 - **Admin Dashboard**: Admins can manage products, users, and orders.
 - **Seller Dashboard**: Sellers can validate orders and view their sales.
@@ -70,11 +70,11 @@ This project also implements real-time validation for orders by both sellers and
 
 Make sure you have the following installed:
 - **NodeJS**  
-  _I used node version 16.20.0 and npm version 6.14.9 at the time of creation._
+  _We used node version 16.20.0 and npm version 6.14.9 at the time of creation._
 - **MongoDB**  
-  _I used mongo version 4.4.1 at the time of creation._
+  _We used mongo version 8.0 at the time of creation._
 - **Postman**  
-  _I used postman version 7.36.1 at the time of creation._
+  _We used postman version 7.36.1 at the time of creation._
 
 ---
 
@@ -124,18 +124,9 @@ git clone https://github.com/conanlecoder/jewelryglow.git
 
 ---
 
-### **Environment Variables**
 
-Rename `.env-example` to `.env` and set the following values:
 
-```env
-NODE_ENV = development
-PORT = <Your Desired Port>
-MONGO_URI = <Your MongoDB URI>
-JWT_SECRET = <Your Secret Key>
-```
 
----
 
 ### **Run the Application**
 
