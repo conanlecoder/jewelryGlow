@@ -9,16 +9,20 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		orderItems,
 		shippingAddress,
 		paymentMethod,
-		itemsPrice,
-		taxPrice,
 		shippingPrice,
-		totalPrice,
 	} = req.body;
 
 	if (orderItems && orderItems.length === 0) {
 		res.status(400);
 		throw new Error('No order items');
 	} else {
+		const itemsPrice = orderItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+		// Calculate taxPrice as 15% of itemsPrice (example tax rate)
+		const taxPrice = Number((0.15 * itemsPrice).toFixed(2));
+
+		const totalPrice = itemsPrice + shippingPrice + taxPrice;
+
 		const order = new Order({
 			orderItems,
 			user: req.user._id,
@@ -34,6 +38,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		res.status(201).json(createdOrder);
 	}
 });
+
 
 // @desc    Get all orders for sellers
 // @route   GET /api/orders/seller-orders
