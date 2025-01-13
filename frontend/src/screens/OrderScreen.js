@@ -102,6 +102,7 @@ const OrderScreen = ({ match }) => {
                 ) : (
                     <Message variant="danger">Not Delivered</Message>
                 )}
+
               </ListGroup.Item>
 
               <ListGroup.Item>
@@ -127,6 +128,7 @@ const OrderScreen = ({ match }) => {
                       ))}
                     </ListGroup>
                 )}
+
               </ListGroup.Item>
             </ListGroup>
           </Col>
