@@ -45,22 +45,6 @@ This project also implements real-time validation for orders by both sellers and
 
 ---
 
-## **Screenshots**
-
-### **Home Page**
-![Home Page](path/to/homepage-screenshot.png)
-
-### **Product Page**
-![Product Page](path/to/productpage-screenshot.png)
-
-### **Cart Page**
-![Cart Page](path/to/cartpage-screenshot.png)
-
-### **Place Order Page**
-![Place Order Page](path/to/placeorderpage-screenshot.png)
-
-### **Admin Dashboard**
-![Admin Dashboard](path/to/admindashboard-screenshot.png)
 
 ---
 
