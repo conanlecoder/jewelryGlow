@@ -155,7 +155,7 @@ const cancelOrder = asyncHandler(async (req, res) => {
 });
 // @desc    Validate order by seller
 // @route   PUT /api/orders/:id/validate
-// @access  Private/Seller
+// @access  Private/Admin or Seller
 const validateOrder = asyncHandler(async (req, res) => {
 	const order = await Order.findById(req.params.id);
 

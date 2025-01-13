@@ -181,7 +181,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
 		});
 	}
 };
-// Action to validate an order by a seller
+// Action to validate an order by a seller and admin
 export const validateOrder = (orderId) => async (dispatch, getState) => {
 	try {
 		dispatch({ type: ORDER_VALIDATE_REQUEST });
