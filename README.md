@@ -147,7 +147,7 @@ _Link to your live demo if applicable._
 ## **Authors**
 
 - **RYANY Aymane**  
-- **ELYATIMI Othmane**
+- **EL YATIMI Othmane**
 ---
 
 
