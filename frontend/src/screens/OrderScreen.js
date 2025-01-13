@@ -68,7 +68,7 @@ const OrderScreen = ({ match }) => {
       dispatch(cancelOrder(orderId));
     }
   };
-
+  const taxPrice = Number((0.15 * order.itemsPrice).toFixed(2));
   return loading ? (
       <Loader />
   ) : error ? (
@@ -156,7 +156,7 @@ const OrderScreen = ({ match }) => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Tax</Col>
-                    <Col>{order.taxPrice} €</Col>
+                    <Col>{taxPrice} €</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
