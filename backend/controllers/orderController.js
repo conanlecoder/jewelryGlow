@@ -122,24 +122,32 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 	}
 });
 
-// @desc    Cancel order
-// @route   PUT /api/orders/:id/cancel
-// @access  Private
 const cancelOrder = asyncHandler(async (req, res) => {
 	const order = await Order.findById(req.params.id);
 
 	if (order) {
-		// Check if the order is eligible for cancellation
-		if (order.isPaid || order.isDelivered) {
+		// Check if the order has already been cancelled
+		if (order.isCancelled) {
 			res.status(400);
-			throw new Error('Paid or delivered orders cannot be cancelled');
+			throw new Error('This order has already been cancelled');
 		}
 
+		// Check if the order is already delivered
+		if (order.isDelivered) {
+			res.status(400);
+			throw new Error('Delivered orders cannot be cancelled');
+		}
+
+		// Mark the order as cancelled and save
 		order.isCancelled = true;
 		order.cancelledAt = Date.now();
 
 		const cancelledOrder = await order.save();
-		res.json(cancelledOrder);
+		res.json({
+			status: 'cancelled',
+			message: 'Order cancelled successfully',
+			order: cancelledOrder,
+		});
 	} else {
 		res.status(404);
 		throw new Error('Order not found');

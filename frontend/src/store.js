@@ -28,9 +28,11 @@ import {
 	orderListReducer,
 	orderDeliverReducer,
 	orderValidateReducer,
-	sellerOrderListReducer,  // Import the new reducer
+	orderCancelReducer, // Import the new reducer
+	sellerOrderListReducer,
 } from './reducers/orderReducers';
 
+// Combine all reducers
 const reducer = combineReducers({
 	productList: productListReducer,
 	productDetails: productDetailsReducer,
@@ -47,7 +49,8 @@ const reducer = combineReducers({
 	orderPay: orderPayReducer,
 	orderListMy: orderListMyReducer,
 	orderDeliver: orderDeliverReducer,
-	orderValidate: orderValidateReducer, // Add the reducer here
+	orderValidate: orderValidateReducer,
+	orderCancel: orderCancelReducer, // Added orderCancelReducer
 	productDelete: productDeleteReducer,
 	productCreate: productCreateReducer,
 	productUpdate: productUpdateReducer,
@@ -55,21 +58,23 @@ const reducer = combineReducers({
 	productReviewCreate: productReviewCreateReducer,
 	productTopRated: productTopRatedReducer,
 	sellerOrderList: sellerOrderListReducer,
-
 });
 
 // Get cartItems from local storage
 const cartItemsFromStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
 	: [];
+
 // Get userInfo from local storage
 const userInfoFromStorage = localStorage.getItem('userInfo')
 	? JSON.parse(localStorage.getItem('userInfo'))
 	: null;
+
 // Get shippingAddress from local storage
 const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 	? JSON.parse(localStorage.getItem('shippingAddress'))
 	: {};
+
 // Get paymentMethod from local storage
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
 	? JSON.parse(localStorage.getItem('paymentMethod'))
@@ -84,8 +89,6 @@ const initialState = {
 	},
 	userLogin: { userInfo: userInfoFromStorage },
 };
-
-
 
 // Set middleware to thunk middleware
 const middleware = [thunk];
