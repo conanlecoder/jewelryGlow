@@ -28,6 +28,10 @@ import {
 	SELLER_ORDER_LIST_REQUEST,
 	SELLER_ORDER_LIST_SUCCESS,
 	SELLER_ORDER_LIST_FAIL,
+	ORDER_CANCEL_REQUEST,
+	ORDER_CANCEL_SUCCESS,
+	ORDER_CANCEL_FAIL,
+	ORDER_CANCEL_RESET,
 } from '../constants/orderConstants'
 
 export const orderValidateReducer = (state = {}, action) => {
@@ -169,12 +173,7 @@ export const orderDeliverReducer = (state = {}, action) => {
 			return state
 	}
 }
-import {
-	ORDER_CANCEL_REQUEST,
-	ORDER_CANCEL_SUCCESS,
-	ORDER_CANCEL_FAIL,
-	ORDER_CANCEL_RESET,
-} from '../constants/orderConstants';
+
 
 export const orderCancelReducer = (state = {}, action) => {
 	switch (action.type) {
