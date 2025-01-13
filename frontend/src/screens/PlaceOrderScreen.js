@@ -22,11 +22,11 @@ const PlaceOrderScreen = ({ history }) => {
 	cart.itemsPrice = addDecimals(
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
-	// Shipping price - over R1000 = R0
-	// Else R150
-	cart.shippingPrice = addDecimals(cart.itemsPrice > 1000 ? 0 : 150)
+
+	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 15)
 	// Tax price
-	cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+	cart.taxPrice = addDecimals(0.2 * cart.itemsPrice)
+
 	// Total price
 	cart.totalPrice = addDecimals(
 		(
@@ -110,7 +110,7 @@ const PlaceOrderScreen = ({ history }) => {
 													</Link>
 												</Col>
 												<Col md={4}>
-													{item.qty} x {item.price} € = R{item.qty * item.price}
+													{item.qty} x {item.price} € = {item.qty * item.price} €
 												</Col>
 											</Row>
 										</ListGroup.Item>
@@ -130,19 +130,19 @@ const PlaceOrderScreen = ({ history }) => {
 							<ListGroup.Item className='push-to-right'>
 								<Row>
 									<Col>Items</Col>
-									<Col>R{cart.itemsPrice}</Col>
+									<Col>{cart.itemsPrice} €</Col>
 								</Row>
 							</ListGroup.Item>
 							<ListGroup.Item className='push-to-right'>
 								<Row>
 									<Col>Shipping</Col>
-									<Col>R{cart.shippingPrice}</Col>
+									<Col>{cart.shippingPrice} €</Col>
 								</Row>
 							</ListGroup.Item>
 							<ListGroup.Item className='push-to-right'>
 								<Row>
 									<Col>Tax</Col>
-									<Col>R{cart.taxPrice}</Col>
+									<Col>{cart.taxPrice} €</Col>
 								</Row>
 							</ListGroup.Item>
 							<ListGroup.Item className='push-to-right'>
@@ -151,7 +151,7 @@ const PlaceOrderScreen = ({ history }) => {
 										<strong>Total</strong>
 									</Col>
 									<Col>
-										<strong>R{cart.totalPrice}</strong>
+										<strong>{cart.totalPrice} €</strong>
 									</Col>
 								</Row>
 							</ListGroup.Item>

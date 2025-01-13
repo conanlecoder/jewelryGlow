@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import SearchBox from './SearchBox';
 import { logout } from '../actions/userActions';
+import '../header.css'; // Import custom CSS file
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -20,15 +21,22 @@ const Header = () => {
 	return (
 		<header>
 			<Navbar
+				style={{ backgroundColor: '#F5E9DA' }} // Light beige background
 				className="text-uppercase"
-				bg="primary"
-				variant="dark"
 				expand="lg"
 				collapseOnSelect
 			>
 				<Container>
 					<LinkContainer to="/">
-						<Navbar.Brand>React E-Commerce</Navbar.Brand>
+						<Navbar.Brand>
+							<img
+								src="/images/logo.png" // Path to your logo file
+								alt="Logo"
+								width="200" // Adjust width as needed
+								height="80"
+								className="d-inline-block align-top"
+							/>
+						</Navbar.Brand>
 					</LinkContainer>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
@@ -36,23 +44,29 @@ const Header = () => {
 						<Nav className="ml-auto">
 							{/* Cart */}
 							<LinkContainer to="/cart">
-								<Nav.Link>
+								<Nav.Link className="custom-btn-text">
 									<i className="fas fa-shopping-cart"></i> Cart
 								</Nav.Link>
 							</LinkContainer>
 
 							{/* User Dropdown */}
 							{userInfo ? (
-								<NavDropdown title={userInfo.name} id="username">
+								<NavDropdown
+									title={userInfo.name}
+									id="username"
+									className="custom-btn-text"
+								>
 									<LinkContainer to="/profile">
 										<NavDropdown.Item>Profile</NavDropdown.Item>
 									</LinkContainer>
-									<NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+									<NavDropdown.Item onClick={logoutHandler}>
+										Logout
+									</NavDropdown.Item>
 								</NavDropdown>
 							) : (
 								// Login Link
 								<LinkContainer to="/login">
-									<Nav.Link>
+									<Nav.Link className="custom-btn-text">
 										<i className="fas fa-user"></i> Sign In
 									</Nav.Link>
 								</LinkContainer>
@@ -60,7 +74,11 @@ const Header = () => {
 
 							{/* Admin Dropdown */}
 							{userInfo && userInfo.isAdmin && (
-								<NavDropdown title="Admin" id="adminmenu">
+								<NavDropdown
+									title="Admin"
+									id="adminmenu"
+									className="custom-btn-text"
+								>
 									<LinkContainer to="/admin/userlist">
 										<NavDropdown.Item>Users</NavDropdown.Item>
 									</LinkContainer>
@@ -75,20 +93,16 @@ const Header = () => {
 
 							{/* Seller Dropdown */}
 							{userInfo && userInfo.isSeller && (
-								<NavDropdown title='Seller' id='sellermenu'>
-									<LinkContainer to='/seller/orders'>
+								<NavDropdown
+									title="Seller"
+									id="sellermenu"
+									className="custom-btn-text"
+								>
+									<LinkContainer to="/seller/orders">
 										<NavDropdown.Item>Orders</NavDropdown.Item>
 									</LinkContainer>
 								</NavDropdown>
 							)}
-							{userInfo && (userInfo.isAdmin || userInfo.isSeller) && (
-								<NavDropdown title="Dashboard" id="dashboardmenu">
-									<LinkContainer to="/dashboard">
-										<NavDropdown.Item>Dashboard</NavDropdown.Item>
-									</LinkContainer>
-								</NavDropdown>
-							)}
-
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
